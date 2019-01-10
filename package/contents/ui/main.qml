@@ -31,6 +31,7 @@ Item {
     property bool planar: (plasmoid.formFactor == PlasmaCore.Types.Planar)
 
     property bool initialized: false
+    property bool sourcesInitialized: false
 
     // configuration
     property int temperatureUnit: plasmoid.configuration.temperatureUnit
@@ -397,6 +398,10 @@ Item {
         repeat: true
         running: true
         onTriggered: {
+            if(!sourcesInitialized) {
+                sourcesInitialized = true
+                reloadAllSources()
+            }
             ModelUtils.computeVirtuals(temperatureModel)
         }
     }
